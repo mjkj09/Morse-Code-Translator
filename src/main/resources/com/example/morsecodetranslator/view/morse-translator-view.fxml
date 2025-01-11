@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.morsecodetranslator.controller.MorseTranslatorController"
+      alignment="CENTER" spacing="10">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Morse Code Translator" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <TextArea fx:id="inputTextArea"
+              promptText="Wpisz tekst do przetłumaczenia..."/>
+
+    <RadioButton text="Encode (Text → Morse)"
+                 fx:id="encodeRadioBtn"
+                 toggleGroup="$strategyToggleGroup"
+                 selected="true"/>
+    <RadioButton text="Decode (Morse → Text)"
+                 fx:id="decodeRadioBtn"
+                 toggleGroup="$strategyToggleGroup"/>
+
+
+    <Button text="Translate" onAction="#onTranslateButtonClick"/>
+
+    <TextArea fx:id="outputTextArea"
+              promptText="Here will be the translation..."
+              editable="false"/>
+</VBox>
