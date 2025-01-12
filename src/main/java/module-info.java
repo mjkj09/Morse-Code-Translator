@@ -6,6 +6,8 @@ module com.example.morsecodetranslator {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
 
     exports com.example.morsecodetranslator.application;
     opens com.example.morsecodetranslator.application to javafx.fxml;

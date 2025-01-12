@@ -1,39 +1,38 @@
 package com.example.morsecodetranslator.service;
 
-import java.util.HashMap;
+import com.example.morsecodetranslator.model.MorseMappingSingleton;
+
 import java.util.Map;
 
 public class DecodeMorseStrategy implements ITranslatorStrategy {
-
     @Override
     public String translate(String input) {
-        String[] morseTokens = input.trim().split("\\s+");
-        Map<String, Character> morseToChar = getMorseToCharMap();
+        String tmp = input.replaceAll("\\r\\n", "\n");
+
+        tmp = tmp.replaceAll("\\s+", " ");
+
+        tmp = tmp.replaceAll("(\\s*/\\s*)+", " / ");
+
+        tmp = tmp.replaceAll("\\s+", " ");
+
+        tmp = tmp.trim();
+
+        String[] tokens = tmp.split("\\s+");
+
+        Map<String, Character> morseToChar =
+                MorseMappingSingleton.getInstance().getMorseToCharMap();
 
         StringBuilder sb = new StringBuilder();
-        for (String token : morseTokens) {
-            if (morseToChar.containsKey(token)) {
+        for (String token : tokens) {
+            if (token.equals("/")) {
+                sb.append(' ');
+            } else if (morseToChar.containsKey(token)) {
                 sb.append(morseToChar.get(token));
             } else {
                 sb.append('?');
             }
         }
+
         return sb.toString();
-    }
-
-    private Map<String, Character> getMorseToCharMap() {
-        Map<String, Character> map = new HashMap<>();
-        map.put("•-", 'A');
-        map.put("-•••", 'B');
-        map.put("-•-•", 'C');
-        map.put("-••", 'D');
-        map.put("•", 'E');
-        map.put("••-•", 'F');
-        map.put("--•", 'G');
-        map.put("••••", 'H');
-        map.put("/", ' ');
-        // ...
-
-        return map;
     }
 }

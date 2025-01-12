@@ -17,9 +17,6 @@ public class MorseTranslatorController {
     private TextArea outputTextArea;
 
     @FXML
-    private ToggleGroup strategyToggleGroup;
-
-    @FXML
     private RadioButton encodeRadioBtn;
 
     @FXML
@@ -28,15 +25,24 @@ public class MorseTranslatorController {
     private final MorseTranslator translator = new MorseTranslator();
 
     @FXML
+    public void initialize() {
+        ToggleGroup strategyToggleGroup = new ToggleGroup();
+
+        encodeRadioBtn.setToggleGroup(strategyToggleGroup);
+        decodeRadioBtn.setToggleGroup(strategyToggleGroup);
+
+        encodeRadioBtn.setSelected(true);
+    }
+
+    @FXML
     public void onTranslateButtonClick() {
         if (encodeRadioBtn.isSelected()) {
             translator.setStrategy(new EncodeMorseStrategy());
-        } else if (decodeRadioBtn.isSelected()) {
+        } else {
             translator.setStrategy(new DecodeMorseStrategy());
         }
 
         String input = inputTextArea.getText();
-
         String result = translator.translate(input);
 
         outputTextArea.setText(result);
