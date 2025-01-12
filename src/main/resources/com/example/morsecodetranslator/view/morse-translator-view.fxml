@@ -20,8 +20,6 @@
     <RadioButton fx:id="encodeRadioBtn" text="Encode (Text → Morse)"/>
     <RadioButton fx:id="decodeRadioBtn" text="Decode (Morse → Text)"/>
 
-    <Button text="Translate" onAction="#onTranslateButtonClick"/>
-
     <TextArea fx:id="outputTextArea"
               promptText="Here will be the translation..."
               editable="false"/>
