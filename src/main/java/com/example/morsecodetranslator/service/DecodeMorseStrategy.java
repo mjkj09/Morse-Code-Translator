@@ -7,6 +7,10 @@ import java.util.Map;
 public class DecodeMorseStrategy implements ITranslatorStrategy {
     @Override
     public String translate(String input) {
+        if (input.trim().isEmpty()) {
+            return "";
+        }
+
         String tmp = input.replaceAll("\\r\\n", "\n");
 
         tmp = tmp.replaceAll("\\s+", " ");

@@ -7,10 +7,15 @@ import java.util.Map;
 public class EncodeMorseStrategy implements ITranslatorStrategy {
     @Override
     public String translate(String input) {
+        if (input.trim().isEmpty()) {
+            return "";
+        }
+
         Map<Character, String> charToMorse =
                 MorseMappingSingleton.getInstance().getCharToMorseMap();
 
-        String normalized = input.replaceAll("\\s+", " ");
+        String leadingTrimmed = input.replaceAll("^\\s+", "");
+        String normalized = leadingTrimmed.replaceAll("\\s+", " ").toUpperCase();
         normalized = normalized.toUpperCase();
 
         StringBuilder sb = new StringBuilder();
