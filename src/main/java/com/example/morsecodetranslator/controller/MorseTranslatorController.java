@@ -10,6 +10,10 @@ import org.kordamp.ikonli.materialdesign.MaterialDesign;
 
 import java.io.File;
 
+/**
+ * Controller for the Morse Code Translator UI.
+ * Handles user interactions and updates the translation output based on input and settings.
+ */
 public class MorseTranslatorController implements IObserver {
 
     @FXML
@@ -36,6 +40,9 @@ public class MorseTranslatorController implements IObserver {
     private final MorseTranslator translator = new MorseTranslator();
     private final ObservedSubject subject = new ObservedSubject();
 
+    /**
+     * Initializes the controller, sets up event handlers, and configures UI components.
+     */
     @FXML
     public void initialize() {
         ToggleGroup strategyToggleGroup = new ToggleGroup();
@@ -44,63 +51,47 @@ public class MorseTranslatorController implements IObserver {
         encodeRadioBtn.setSelected(true);
 
         subject.addObserver(this);
-        inputTextArea.setOnKeyTyped(e -> subject.setState(inputTextArea.getText()));
-        encodeRadioBtn.setOnAction(e -> subject.setState(inputTextArea.getText()));
-        decodeRadioBtn.setOnAction(e -> subject.setState(inputTextArea.getText()));
+        inputTextArea.setOnKeyTyped(event -> subject.setState(inputTextArea.getText()));
+        encodeRadioBtn.setOnAction(event -> subject.setState(inputTextArea.getText()));
+        decodeRadioBtn.setOnAction(event -> subject.setState(inputTextArea.getText()));
 
         saveButton.setGraphic(new FontIcon(MaterialDesign.MDI_CONTENT_SAVE));
-
         extensionComboBox.getItems().addAll("txt", "csv", "md");
         extensionComboBox.setValue("txt");
     }
 
+    /**
+     * Saves the translation to a file when the Save button is clicked.
+     * Validates the file name and uses the selected file format.
+     */
     @FXML
     public void onSaveButtonClick() {
         try {
             String input = inputTextArea.getText();
             String output = outputTextArea.getText();
-
             String extension = extensionComboBox.getValue();
             String filename = filenameField.getText();
 
             if (filename == null || filename.trim().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setResizable(true);
-                alert.setTitle("File Name Error");
-                alert.setHeaderText("No file name provided");
-                alert.setContentText("Please enter a valid file name before saving.");
-                alert.showAndWait();
+                showError("File Name Error", "No file name provided", "Please enter a valid file name before saving.");
                 return;
             }
 
             ITranslationFileSaver saver = TranslationFileSaverFactory.getSaver(extension);
-
-            File file = new File("src/main/java/com/example/morsecodetranslator/saved/"
-                    + filename + "." + extension);
+            File file = new File("src/main/java/com/example/morsecodetranslator/saved/" + filename + "." + extension);
             saver.saveTranslation(input, output, file);
 
-            System.out.println("Saved to " + file.getAbsolutePath());
-            Alert success = new Alert(Alert.AlertType.INFORMATION);
-            success.setResizable(true);
-            success.setTitle("Saved");
-            success.setHeaderText("File saved successfully");
-            success.setContentText("File: " + file.getAbsolutePath());
-            success.showAndWait();
-
+            showInfo("File path: " + file.getAbsolutePath());
         } catch (Exception e) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setResizable(true);
-            errorAlert.setTitle("Saving Error");
-            errorAlert.setHeaderText("Could not save file");
-            errorAlert.setContentText(e.getMessage());
-            errorAlert.showAndWait();
-
-            System.err.println("Error saving: "
-                    + e.getMessage());
-            throw new RuntimeException(e);
+            showError("Saving Error", "Could not save the file", e.getMessage());
         }
     }
 
+    /**
+     * Updates the translation output when the input or strategy changes.
+     *
+     * @param newValue the updated input text
+     */
     @Override
     public void update(String newValue) {
         if (encodeRadioBtn.isSelected()) {
@@ -110,5 +101,29 @@ public class MorseTranslatorController implements IObserver {
         }
         String result = translator.translate(newValue);
         outputTextArea.setText(result);
+    }
+
+    /**
+     * Displays an error alert dialog with the provided title, header, and message.
+     */
+    private void showError(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.setResizable(true);
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays an information alert dialog confirming a successful file save.
+     */
+    private void showInfo(String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("File Saved");
+        alert.setHeaderText("File saved successfully");
+        alert.setContentText(content);
+        alert.setResizable(true);
+        alert.showAndWait();
     }
 }
