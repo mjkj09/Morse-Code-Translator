@@ -1,26 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.morsecodetranslator.controller.MorseTranslatorController"
-      alignment="CENTER" spacing="10">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.morsecodetranslator.controller.MorseTranslatorController"
+            styleClass="dark-root"
+            prefWidth="800" prefHeight="500">
+
+    <top>
+        <Label text="Morse Code Translator"
+               BorderPane.alignment="CENTER"
+               styleClass="title-label"/>
+    </top>
+
+    <left>
+        <VBox spacing="20" styleClass="left-panel">
+            <TextArea fx:id="inputTextArea"
+                      promptText="Type the text for translation..."
+                      wrapText="true"
+                      styleClass="editor-textarea"/>
+            <RadioButton fx:id="encodeRadioBtn" text="Encode (Text → Morse)" styleClass="btn"/>
+            <RadioButton fx:id="decodeRadioBtn" text="Decode (Morse → Text)" styleClass="btn"/>
+        </VBox>
+    </left>
+
+    <right>
+        <VBox spacing="10" styleClass="right-panel">
+            <Label text="Save translation to file:" styleClass="label-save"/>
+            <ComboBox fx:id="extensionComboBox"/>
+            <TextField fx:id="filenameField" promptText="File name (no extension)"/>
+            <Button fx:id="saveButton"
+                    text="Save"
+                    onAction="#onSaveButtonClick"
+                    styleClass="btn, btn-sm, btn-warning"/>
+        </VBox>
+    </right>
+
+    <center>
+        <TextArea fx:id="outputTextArea"
+                  promptText="Here will be the translation..."
+                  wrapText="true"
+                  editable="false"
+                  styleClass="editor-textarea"/>
+    </center>
+
     <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
+        <Insets top="10" right="10" bottom="20" left="10"/>
     </padding>
-
-    <Label text="Morse Code Translator" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-
-    <TextArea fx:id="inputTextArea"
-              promptText="Type the text for translation..."/>
-
-    <RadioButton fx:id="encodeRadioBtn" text="Encode (Text → Morse)"/>
-    <RadioButton fx:id="decodeRadioBtn" text="Decode (Morse → Text)"/>
-
-    <TextArea fx:id="outputTextArea"
-              promptText="Here will be the translation..."
-              editable="false"/>
-</VBox>
+</BorderPane>

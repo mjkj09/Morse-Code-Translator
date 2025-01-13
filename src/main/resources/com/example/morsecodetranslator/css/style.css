@@ -1,0 +1,50 @@
+.dark-root {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #ffffff;
+}
+
+.title-label {
+    -fx-font-family: Consolas;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f0ad4e;
+    -fx-padding: 10 0 20 0;
+}
+
+.left-panel, .right-panel {
+    -fx-padding: 0 10 10 10;
+}
+
+.editor-textarea {
+    -fx-font-family: Consolas;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-control-inner-background: #3b3b3b;
+    -fx-prompt-text-fill: #5b5b5b;
+}
+
+.label-save {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.btn {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.btn:selected {
+    -fx-background-color: #3b3b3b;
+    -fx-text-fill: #f0ad4e;
+    -fx-border-color: #985f0d;
+}
+
+.btn:hover {
+    -fx-text-fill: #f0ad4e;
+}
+
+.btn-sm, .btn-warning, .btn-sm:hover, .btn-warning:hover {
+    -fx-font-weight: bold;
+    -fx-text-fill: #2b2b2b;
+}

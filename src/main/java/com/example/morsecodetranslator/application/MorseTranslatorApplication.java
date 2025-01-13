@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MorseTranslatorApplication extends Application {
     @Override
@@ -15,7 +17,16 @@ public class MorseTranslatorApplication extends Application {
                         "/com/example/morsecodetranslator/view/morse-translator-view.fxml"
                 )
         );
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 500);
+
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+
+        scene.getStylesheets().add(
+                Objects.requireNonNull(MorseTranslatorApplication.class.getResource(
+                        "/com/example/morsecodetranslator/css/style.css"
+                )).toExternalForm()
+        );
+
         stage.setTitle("Morse Code Translator");
         stage.setScene(scene);
         stage.show();
